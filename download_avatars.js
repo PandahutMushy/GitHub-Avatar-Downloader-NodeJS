@@ -2,11 +2,13 @@ var request = require("request");
 var fs = require("fs");
 var secrets = require("./secrets");
 
+//Get parameters entered by the user
 var owner = process.argv[2];
 var repo = process.argv[3];
 
 console.log("Welcome to the GitHub Avatar Downloader!");
 
+//Return usage instructions if a parameter is missing. Start downloader if both arguments are present
 if (!owner || !repo) {
   console.log("Error! You must specify an owner and a repo. Command usage: download_avatars <owner> <repo_name>");
   return;
@@ -14,7 +16,7 @@ if (!owner || !repo) {
 else if (owner && repo)
   getRepoContributors(owner, repo, callbackDownloader);
 
-
+//Callback function - Invokes downloadImageByURL to download each contributor's avatar image
 function callbackDownloader(err, contributors) {
   if (err) {
     console.log("Error detected: " + err);
@@ -26,6 +28,7 @@ function callbackDownloader(err, contributors) {
   }
 }
 
+//Connect to github API and send requested data to callbackDownloader for downloads
 function getRepoContributors(repoOwner, repoName) {
   var options = {
     url:
@@ -48,6 +51,7 @@ function getRepoContributors(repoOwner, repoName) {
   });
 }
 
+//Performs the download for each requested image
 function downloadImageByURL(imgUrl, sysPath) {
   request.get(imgUrl).on("error", function (err) {
     console.log("There was an error: " + err);
