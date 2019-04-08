@@ -23,7 +23,7 @@ function callbackDownloader(err, contributors) {
     return;
   }
   for (cont of contributors) {
-    var sysPath = process.cwd().toString() + "/downloads/" + cont.login + ".jpg";
+    var sysPath = process.cwd().toString() + "/avatars/" + cont.login + ".jpg";
     downloadImageByURL(cont.avatar_url, sysPath);
   }
 }
